@@ -13,20 +13,31 @@ class Browser(QMainWindow):
         self.setWindowIcon(QIcon(QPixmap('MIT.jpg')))
         self.setGeometry(100, 100, 1200, 800)
 
+        #search bar
         self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText('🔍 Search the web')
+        self.search_bar.returnPressed.connect(self.search_web)
+        
+        #navigation buttons
+        #back_button
         self.back_button = QPushButton()
         self.back_button.setIcon(QIcon('back_button.svg'))
         # self.back_button.clicked.connect()
-        self.search_bar.setPlaceholderText('🔍 Search the web')
-        self.search_bar.returnPressed.connect(self.search_web)
+        #reload button
+        self.reload_button = QPushButton()
+        # self.reload_button.setIcon(QIcon())
+        #self.reload_button.clicked.connect() 
+        
+        #browser screen
         self.browser = QWebEngineView()
-        #self.browser.setUrl(QUrl('https://www.google.com'))
+        
 
         #layout
         central_widget = QWidget()
         layout = QVBoxLayout()
         layout_1 = QHBoxLayout()
         layout_1.addWidget(self.back_button)
+        layout_1.addWidget(self.reload_button)
         layout_1.addWidget(self.search_bar)
         layout.addLayout(layout_1)
         layout.addWidget(self.browser)
