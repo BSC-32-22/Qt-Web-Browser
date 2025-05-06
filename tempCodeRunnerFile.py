@@ -1,6 +1,6 @@
 import sys
 #from pathlib import Path
-from PyQt5.QtWidgets import QApplication,QMessageBox, QMainWindow, QVBoxLayout,QHBoxLayout, QWidget, QLineEdit,QPushButton,QToolButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout,QHBoxLayout, QWidget, QLineEdit,QPushButton,QToolButton
 from PyQt5.QtCore import QUrl 
 from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -46,34 +46,17 @@ class Browser(QMainWindow):
         layout.addWidget(self.browser)
         central_widget.setLayout(layout)
 
-       
         self.setCentralWidget(central_widget)
 
     def search_web(self):
-        url = self.search_bar.text().strip().lower()
-        #server url
-        local_server_url = 'http://localhost:8085/'
- 
-        #check input and add needful extensions
+        url = self.search_bar.text()
+        #check input
         if not url:
             return
-        elif not url.endswith(".html"):
-            url += ".html"
-        
-        #local search check 
-        if url in ("index.html","register.html"):
-            if url == 'index.html':
-                url = local_server_url
-            else: 
-                url = f"{local_server_url}register"
-        else:
-             self.browser.setUrl(QUrl.fromLocalFile("/Not_Found_Page.html"))
-             return
+        elif not url.startswith('https://'):
+            url = 'https://' + url
         #search web 
         self.browser.setUrl(QUrl(url))
-        
-     
-            
     
 app = QApplication(sys.argv)
 window = Browser()
