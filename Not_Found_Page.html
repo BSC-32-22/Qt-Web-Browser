@@ -17,19 +17,30 @@
         h2 {
             color: #d9534f;
         }
-        a {
-            margin-top: 10px;
-            color: #337ab7;
-            text-decoration: none;
-            font-size: 16px;
+        form {
+            margin-top: 20px;
         }
-        a:hover {
-            text-decoration: underline;
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #337ab7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #286090;
         }
     </style>
 </head>
 <body>
-    <h2>Document '{input_text}' not found locally.</h2>
-    <a href="https://www.google.com/search?q={input_text}" target="_blank">Search on Google</a>
+    <h2>Document not found locally. Redirect to Google Search?</h2>
+
+    <!-- Button to navigate to google -->
+    <form method="get" action="https://www.google.com/search">
+        <input type="hidden" name="q" value="your_search_query_here">
+        <input type="submit" value="Search on Google">
+    </form>
 </body>
 </html>

@@ -1,7 +1,9 @@
 import sys
+import time 
 #from pathlib import Path
 from PyQt5.QtWidgets import QApplication,QMessageBox, QMainWindow, QVBoxLayout,QHBoxLayout, QWidget, QLineEdit,QPushButton,QToolButton
 from PyQt5.QtCore import QUrl 
+
 from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
@@ -19,15 +21,17 @@ class Browser(QMainWindow):
         #search bar
         self.search_bar = QLineEdit()
         self.search_bar.setPlaceholderText('🔍 Search the web')
-        self.search_bar.returnPressed.connect(self.search_web)
+        self.search_bar.returnPressed.connect(self.search)
         
         #navigation buttons
         #back_button
         self.back_button = QPushButton()
         self.back_button.setIcon(QIcon('back_button.svg'))
         self.back_button.clicked.connect(self.browser.back)
+        #forward_button
         self.forward_button = QPushButton()
         self.forward_button.setIcon(QIcon('forward_button.svg'))
+        self.forward_button.clicked.connect(self.browser.forward)
         #reload button
         self.reload_button = QPushButton()
         self.reload_button.setIcon(QIcon('reload_button.svg'))
@@ -49,28 +53,40 @@ class Browser(QMainWindow):
        
         self.setCentralWidget(central_widget)
 
-    def search_web(self):
+    def search(self):
         url = self.search_bar.text().strip().lower()
-        #server url
+        #local server url
         local_server_url = 'http://localhost:8085/'
  
         #check input and add needful extensions
         if not url:
             return
-        elif not url.endswith(".html"):
-            url += ".html"
-        
         #local search check 
-        if url in ("index.html","register.html"):
-            if url == 'index.html':
+        elif url in ("index","register"):
+            if url == 'index':
                 url = local_server_url
             else: 
                 url = f"{local_server_url}register"
         else:
-             self.browser.setUrl(QUrl.fromLocalFile("/Not_Found_Page.html"))
+             not_found_page = f"""<!DOCTYPE html> 
+                                    <html> 
+                                    <head> 
+                                        <title>Not Found</title> 
+                                    </head>
+                                    <body style="text-align: center;">
+                                        <h2>Document not found. Redirect to Google?</h2>
+                                        <form method="get" action="https://www.google.com/search" style="margin-top: 10px;">
+                                            <input type="hidden" name="q" value="{url}">
+                                            <input type="submit" value="Search using Google">
+                                        </form> 
+                                    </body>
+                                    </html>"""
+             #set Html as per query given
+             self.browser.setHtml(not_found_page)
              return
         #search web 
         self.browser.setUrl(QUrl(url))
+        
         
      
             
