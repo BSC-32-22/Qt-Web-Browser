@@ -12,7 +12,7 @@ class Browser(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("UNIMA Browser")
-        self.setWindowIcon(QIcon(QPixmap('UNIMA_Logo')))
+        self.setWindowIcon(QIcon(QPixmap('/Icons_Logos/UNIMA_Logo.png')))
         self.setGeometry(100, 100, 1200, 800)
 
         #browser screen
@@ -27,24 +27,24 @@ class Browser(QMainWindow):
         #navigation buttons
         #back_button
         self.back_button = QPushButton()
-        self.back_button.setIcon(QIcon('back.svg'))
+        self.back_button.setIcon(QIcon('Icons_Logos/back.svg'))
         self.back_button.setStyleSheet("background-color: blue;")
         self.back_button.clicked.connect(self.browser.back)
         #forward_button
         self.forward_button = QPushButton()
-        self.forward_button.setIcon(QIcon('forward.svg'))
+        self.forward_button.setIcon(QIcon('Icons_Logos/forward.svg'))
         self.forward_button.setStyleSheet("background-color: blue;")
         self.forward_button.clicked.connect(self.browser.forward)
         #reload button
         self.reload_button = QPushButton()
-        self.reload_button.setIcon(QIcon('reload.svg'))
+        self.reload_button.setIcon(QIcon('Icons_Logos/reload.svg'))
         self.reload_button.setStyleSheet("background-color: blue;")
         self.reload_button.clicked.connect(self.browser.reload)
         #home button
         self.home_button = QPushButton()
-        self.home_button.setIcon(QIcon('home.svg'))
+        self.home_button.setIcon(QIcon('Icons_Logos/home.svg'))
         self.home_button.setStyleSheet("background-color: blue;")
-        self.home_button.clicked.connect(lambda: self.browser.setUrl(QUrl.fromLocalFile("/Welcome_Page.html"))) 
+        self.home_button.clicked.connect(lambda: self.browser.setUrl(QUrl.fromLocalFile("/pages/Welcome_Page.html"))) 
         
 
         #layout
@@ -63,7 +63,7 @@ class Browser(QMainWindow):
         self.setCentralWidget(central_widget)
         
         #set homePage
-        self.browser.setUrl(QUrl.fromLocalFile("/Welcome_Page.html"))
+        self.browser.setUrl(QUrl.fromLocalFile("/pages/Welcome_Page.html"))
         
 
     def search(self):
