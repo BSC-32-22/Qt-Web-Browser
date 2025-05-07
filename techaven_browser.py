@@ -11,8 +11,8 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 class Browser(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Techaven Browser")
-        self.setWindowIcon(QIcon(QPixmap('TecHaven.jpg')))
+        self.setWindowTitle("UNIMA Browser")
+        self.setWindowIcon(QIcon(QPixmap('UNIMA_Logo')))
         self.setGeometry(100, 100, 1200, 800)
 
         #browser screen
@@ -21,21 +21,30 @@ class Browser(QMainWindow):
         #search bar
         self.search_bar = QLineEdit()
         self.search_bar.setPlaceholderText('🔍 Search the web')
+        self.search_bar.setStyleSheet("QLineEdit{border: 1px solid blue;}")
         self.search_bar.returnPressed.connect(self.search)
         
         #navigation buttons
         #back_button
         self.back_button = QPushButton()
-        self.back_button.setIcon(QIcon('back_button.svg'))
+        self.back_button.setIcon(QIcon('back.svg'))
+        self.back_button.setStyleSheet("background-color: blue;")
         self.back_button.clicked.connect(self.browser.back)
         #forward_button
         self.forward_button = QPushButton()
-        self.forward_button.setIcon(QIcon('forward_button.svg'))
+        self.forward_button.setIcon(QIcon('forward.svg'))
+        self.forward_button.setStyleSheet("background-color: blue;")
         self.forward_button.clicked.connect(self.browser.forward)
         #reload button
         self.reload_button = QPushButton()
-        self.reload_button.setIcon(QIcon('reload_button.svg'))
-        self.reload_button.clicked.connect(self.browser.reload) 
+        self.reload_button.setIcon(QIcon('reload.svg'))
+        self.reload_button.setStyleSheet("background-color: blue;")
+        self.reload_button.clicked.connect(self.browser.reload)
+        #home button
+        self.home_button = QPushButton()
+        self.home_button.setIcon(QIcon('home.svg'))
+        self.home_button.setStyleSheet("background-color: blue;")
+        self.home_button.clicked.connect(lambda: self.browser.setUrl(QUrl.fromLocalFile("/Welcome_Page.html"))) 
         
 
         #layout
@@ -45,13 +54,17 @@ class Browser(QMainWindow):
         layout_1.addWidget(self.back_button)
         layout_1.addWidget(self.forward_button)
         layout_1.addWidget(self.reload_button)
+        layout_1.addWidget(self.home_button)
         layout_1.addWidget(self.search_bar)
         layout.addLayout(layout_1)
         layout.addWidget(self.browser)
         central_widget.setLayout(layout)
 
-       
         self.setCentralWidget(central_widget)
+        
+        #set homePage
+        self.browser.setUrl(QUrl.fromLocalFile("/Welcome_Page.html"))
+        
 
     def search(self):
         url = self.search_bar.text().strip().lower()
@@ -74,7 +87,7 @@ class Browser(QMainWindow):
                                         <title>Not Found</title> 
                                     </head>
                                     <body style="text-align: center;">
-                                        <h2>Document not found. Redirect to Google?</h2>
+                                        <h2>No results found for ‘{url}’. Try searching on Google?</h2>
                                         <form method="get" action="https://www.google.com/search" style="margin-top: 10px;">
                                             <input type="hidden" name="q" value="{url}">
                                             <input type="submit" value="Search using Google">
