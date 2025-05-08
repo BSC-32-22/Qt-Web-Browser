@@ -1,5 +1,4 @@
 import sys
-import time 
 #from pathlib import Path
 from PyQt5.QtWidgets import QApplication,QMessageBox, QMainWindow, QVBoxLayout,QHBoxLayout, QWidget, QLineEdit,QPushButton,QToolButton
 from PyQt5.QtCore import QUrl 
@@ -12,7 +11,7 @@ class Browser(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("UNIMA Browser")
-        self.setWindowIcon(QIcon(QPixmap('/Icons_Logos/UNIMA_Logo.png')))
+        self.setWindowIcon(QIcon(QPixmap('Icons_Logos/UNIMA_Logo.png')))
         self.setGeometry(100, 100, 1200, 800)
 
         #browser screen
@@ -44,7 +43,12 @@ class Browser(QMainWindow):
         self.home_button = QPushButton()
         self.home_button.setIcon(QIcon('Icons_Logos/home.svg'))
         self.home_button.setStyleSheet("background-color: blue;")
-        self.home_button.clicked.connect(lambda: self.browser.setUrl(QUrl.fromLocalFile("/pages/Welcome_Page.html"))) 
+        self.home_button.clicked.connect(lambda: self.browser.setUrl(QUrl.fromLocalFile("/pages/Welcome_Page.html")))
+        #search
+        self.search_button = QPushButton()
+        self.search_button.setIcon(QIcon('Icons_Logos/search.svg'))
+        self.search_button.setStyleSheet("background-color: blue;")
+        self.search_button.clicked.connect(self.search) 
         
 
         #layout
@@ -56,6 +60,7 @@ class Browser(QMainWindow):
         layout_1.addWidget(self.reload_button)
         layout_1.addWidget(self.home_button)
         layout_1.addWidget(self.search_bar)
+        layout_1.addWidget(self.search_button)
         layout.addLayout(layout_1)
         layout.addWidget(self.browser)
         central_widget.setLayout(layout)
@@ -99,10 +104,7 @@ class Browser(QMainWindow):
              return
         #search web 
         self.browser.setUrl(QUrl(url))
-        
-        
-     
-            
+                    
     
 app = QApplication(sys.argv)
 window = Browser()
