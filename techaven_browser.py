@@ -1,5 +1,8 @@
+#BSC-32-22 Denni Bakaya
+#a browser made using QWebEngineView to render web contents
+#prioritizes search in local server and then uses google search to complete search
+
 import sys
-#from pathlib import Path
 from PyQt5.QtWidgets import QApplication,QMessageBox, QMainWindow, QVBoxLayout,QHBoxLayout, QWidget, QLineEdit,QPushButton,QToolButton
 from PyQt5.QtCore import QUrl 
 
